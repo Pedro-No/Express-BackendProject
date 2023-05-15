@@ -15,5 +15,9 @@
             <img class="outfit-image" src="{{shoes.imageUrl}}" alt="Shoes image">
         </div>
     </section>
-    <a href="/outfit/{{id}}/preview">Preview outfit</a>
+    <a href="/outfit/{{id}}/preview">Preview Outfit</a>
+    <br>
+    <form action="/outfit/{{id}}/delete" method="put">
+        <button type="submit">Delete Outfit</button>
+    </form>
 {{/each}}

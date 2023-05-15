@@ -30,36 +30,84 @@ router.get("/logout", isLoggedIn, (req, res) => {
 
 // profile
 router.get("/profile", isLoggedIn, (req, res) => {
-  const user = req.session.currentUser
+
+  const user = req.session.currentUser;
 
   User.findById(user._id).then(async(userDb)=>{
+    console.log(userDb)
+    if(userDb.collections.length > 0){
+      await userDb.populate("collections");
 
-  await userDb.populate("collections");
-  
-  let collectionsObj = [];
-
-  for(let i = 0; i < userDb.collections.length; i++){
-    Promise.all(
-        [
-          Piece.findById(userDb.collections[i]._id),
-          Piece.findById(userDb.collections[i].top),
-          Piece.findById(userDb.collections[i].bottom),
-          Piece.findById(userDb.collections[i].shoes),
-        ]
-      ).then((vals) => {
-        collectionsObj.push({id:vals[0], top:vals[1], bottom:vals[2], shoes:vals[3]});
-        res.render("private/profile",{user: userDb, collection: collectionsObj});
-    })
-  } 
+      let collectionsObj = [];
+      for(let i = 0; i < userDb.collections.length; i++){
+        Promise.all(
+            [
+              Piece.findById(userDb.collections[i].top),
+              Piece.findById(userDb.collections[i].bottom),
+              Piece.findById(userDb.collections[i].shoes),
+            ]
+          ).then((vals) => {
+            collectionsObj.push({id: userDb.collections[i]._id, top:vals[0], bottom:vals[1], shoes:vals[2]});
+            res.render("private/profile",{user: userDb, collection: collectionsObj});
+        })
+      } 
+    }else {
+      res.render("private/profile",{user: userDb, collection:[]})
+    }
   }).catch((err) => {
     console.error(err);
   })
 })
 
+// delete outfit
+router.put('/outfit/:outfitId/delete', (req, res) => {
+  let {outfitId} = req.params;
+  console.log(outfitId)
+
+  const user = req.session.currentUser;
+
+  let collectionsObj = [];
+  
+    async function removeOutfit(){
+    
+      try {
+        const userDb = await User.findById(user._id)
+        for (let i = 0; i < userDb.collections.length; i++){
+          console.log(userDb.collections[i])
+          if (userDb.collections[i].toString() !== outfitId) {
+            collectionsObj.push(userDb.collections[i])
+          }
+        }
+
+        userDb.collections=collectionsObj
+
+        await User.findByIdAndUpdate(user._id,userDb,{new:true})
+        
+      }
+      catch (err) {
+        console.error(err)
+      }
+    }
+    removeOutfit()
+    res.redirect('/profile');
+  });
+
 // edit outfit
 router.get("/outfit/:outfitId/preview", (req,res) => {
+
   let {outfitId} = req.params;
-  res.render("private/preview")
+
+  Outfit.findById(outfitId).then(async(outfitDb) =>{
+    
+    await outfitDb.populate("top");
+    await outfitDb.populate("bottom");
+    await outfitDb.populate("shoes");
+
+    res.render("private/preview-outfit", {outfit: outfitDb});
+    
+  }).catch((err) => {
+    console.error(err);
+  })
 })  
 
 module.exports = router;
