@@ -66,7 +66,7 @@ piece model
 {
   name: string, //white T-shirt
   image: string, //Url
-  type: string, //type: tops,bottom or shoes
+  pieceType: enum, //type: tops,bottom or shoes
 }
 ```
 
@@ -81,6 +81,9 @@ mongoose <br>
 morgan <br>
 nodemon <br>
 serve-favicon <br>
+express-session <br>
+connect-mongo <br>
+bcrypt
 
 <br>
 

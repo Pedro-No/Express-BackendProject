@@ -1,0 +1,19 @@
+<h1>Welcome {{user.username}}</h1>
+<h2>Your collections:</h2>
+{{#each collection}}
+    <section class="outfit-section">
+        <div class="outfit-piece">
+            <p>{{top.name}}</p>
+            <img class="outfit-image" src="{{top.imageUrl}}" alt="Top image">
+        </div>
+        <div class="outfit-piece">
+            <p>{{bottom.name}}</p>
+            <img class="outfit-image" src="{{bottom.imageUrl}}" alt="Bottom image">
+        </div>
+        <div class="outfit-piece">
+            <p>{{shoes.name}}</p>
+            <img class="outfit-image" src="{{shoes.imageUrl}}" alt="Shoes image">
+        </div>
+    </section>
+    <a href="/outfit/{{id}}/preview">Preview outfit</a>
+{{/each}}

@@ -10,3 +10,17 @@ a {
 h1 {
   color: 15px;
 }
+
+.outfit-section{
+  display: flex;
+}
+
+.outfit-piece{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.outfit-image{
+  height: 100px;
+}
