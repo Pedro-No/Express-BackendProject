@@ -34,7 +34,7 @@ router.get("/profile", isLoggedIn, (req, res) => {
   const user = req.session.currentUser;
 
   User.findById(user._id).then(async(userDb)=>{
-    if(userDb.collections.length > 0){
+    if(userDb.collections.length >= 1){
       await userDb.populate("collections");
 
       let collectionsObj = [];
@@ -47,9 +47,9 @@ router.get("/profile", isLoggedIn, (req, res) => {
             ]
           ).then((vals) => {
             collectionsObj.push({id: userDb.collections[i]._id, top:vals[0], bottom:vals[1], shoes:vals[2]});
-            res.render("private/profile",{user: userDb, collection: collectionsObj});
-        })
-      } 
+          })
+        } 
+        res.render("private/profile",{user: userDb, collection: collectionsObj});
     }else {
       res.render("private/profile",{user: userDb, collection:[]})
     }
@@ -58,7 +58,25 @@ router.get("/profile", isLoggedIn, (req, res) => {
   })
 })
 
-// delete outfit está fudido
+// preview outfit 
+router.get("/outfit/:outfitId/preview", (req,res) => {
+
+  let {outfitId} = req.params;
+
+  Outfit.findById(outfitId).then(async(outfitDb) =>{
+    
+    await outfitDb.populate("top");
+    await outfitDb.populate("bottom");
+    await outfitDb.populate("shoes");
+
+    res.render("private/preview-outfit", {outfit: outfitDb});
+    
+  }).catch((err) => {
+    console.error(err);
+  })
+})
+
+// delete outfit
 router.post('/outfit/:outfitId/delete', (req, res) => {
   let {outfitId} = req.params;
 
@@ -85,26 +103,13 @@ router.post('/outfit/:outfitId/delete', (req, res) => {
         console.error(err)
       }
     }
-    removeOutfit()
-    res.render('private/profile');
-  });
+  removeOutfit()
+  res.redirect('/profile');
+});
 
-// preview outfit
-router.get("/outfit/:outfitId/preview", (req,res) => {
-
-  let {outfitId} = req.params;
-
-  Outfit.findById(outfitId).then(async(outfitDb) =>{
-    
-    await outfitDb.populate("top");
-    await outfitDb.populate("bottom");
-    await outfitDb.populate("shoes");
-
-    res.render("private/preview-outfit", {outfit: outfitDb});
-    
-  }).catch((err) => {
-    console.error(err);
-  })
-})  
+// search
+router.get('/outfit/search', (req,res) => {
+  res.render("private/search")
+})
 
 module.exports = router;
