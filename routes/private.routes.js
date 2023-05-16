@@ -112,4 +112,19 @@ router.get('/outfit/search', (req,res) => {
   res.render("private/search")
 })
 
+router.post('/results', (req,res) => {
+  const {piece}=req.body;
+  async function findPiece(){
+    try{
+      let pieceDb = await Piece.find(piece);
+      console.log(pieceDb)
+      res.send({outfits: pieceDb})
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+  findPiece();
+})
+
 module.exports = router;
