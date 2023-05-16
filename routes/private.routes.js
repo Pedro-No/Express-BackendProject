@@ -34,7 +34,6 @@ router.get("/profile", isLoggedIn, (req, res) => {
   const user = req.session.currentUser;
 
   User.findById(user._id).then(async(userDb)=>{
-    console.log(userDb)
     if(userDb.collections.length > 0){
       await userDb.populate("collections");
 
@@ -59,10 +58,9 @@ router.get("/profile", isLoggedIn, (req, res) => {
   })
 })
 
-// delete outfit
-router.put('/outfit/:outfitId/delete', (req, res) => {
+// delete outfit está fudido
+router.post('/outfit/:outfitId/delete', (req, res) => {
   let {outfitId} = req.params;
-  console.log(outfitId)
 
   const user = req.session.currentUser;
 
@@ -73,7 +71,6 @@ router.put('/outfit/:outfitId/delete', (req, res) => {
       try {
         const userDb = await User.findById(user._id)
         for (let i = 0; i < userDb.collections.length; i++){
-          console.log(userDb.collections[i])
           if (userDb.collections[i].toString() !== outfitId) {
             collectionsObj.push(userDb.collections[i])
           }
@@ -89,10 +86,10 @@ router.put('/outfit/:outfitId/delete', (req, res) => {
       }
     }
     removeOutfit()
-    res.redirect('/profile');
+    res.render('private/profile');
   });
 
-// edit outfit
+// preview outfit
 router.get("/outfit/:outfitId/preview", (req,res) => {
 
   let {outfitId} = req.params;
