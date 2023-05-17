@@ -1,5 +1,9 @@
 <h3>search for outfits</h3>
 <form action="/results" method="post">
-  <input type="text" name="piece" placeholder="search outfit">
+  <select name="search">
+    {{#each response}}
+      <option name="search" value='{{name}}'>{{name}}</option>
+    {{/each}}
+  </select>
   <button type="submit">search</button>
 </form> 

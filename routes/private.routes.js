@@ -104,12 +104,13 @@ router.post('/outfit/:outfitId/delete', isLoggedIn, async (req, res) => {
 });
 
 // search
-router.get('/outfit/search', (req,res) => {
-  res.render("private/search")
+router.get('/outfit/search', async (req,res) => {
+    const piecesArray = await Piece.find();
+    res.render("private/search", {response: piecesArray})
 })
 
 router.post('/results', async (req,res) => {
-  let search = req.body.piece
+  const {search} = req.body
 
   try{
     let pieceDb = await Piece.find({name: search});
@@ -122,7 +123,6 @@ router.post('/results', async (req,res) => {
 
     let outfitsDb = await Outfit.find(outfitSearch)
 
-    //res.send({outfits: outfitsDb})
     res.render('private/results',{outfits: outfitsDb})
   }
   catch(err){
@@ -131,12 +131,14 @@ router.post('/results', async (req,res) => {
 })
 
 // edit
-router.get('outfit/:outfitId/edit',isLoggedIn, (req,res) => {
+router.get('/outfit/:outfitId/edit',isLoggedIn, (req,res) => {
+  console.log("HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
   res.render('private/edit')
 })
 
-router.get('outfit/update', isLoggedIn, async (req,res) => {
-  let {outfitId, top, bottom, shoes} = req.body
+router.get('/outfit/:outfitId/edit', isLoggedIn, async (req,res) => {
+  let {outfitId} = req.params
+  let {top, bottom, shoes} = req.body
 
   let topPieceDb = await Piece.find({name: top});
   let bottomPieceDb = await Piece.find({name: bottom});
