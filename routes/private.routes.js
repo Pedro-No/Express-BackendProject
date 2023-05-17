@@ -23,7 +23,6 @@ router.get("/logout", isLoggedIn, (req, res) => {
       res.status(500).render("private/logout", { errorMessage: err.message });
       return;
     }
-
     res.redirect("/");
   });
 });
@@ -59,7 +58,7 @@ router.get("/profile", isLoggedIn, (req, res) => {
 })
 
 // preview outfit 
-router.get("/outfit/:outfitId/preview", (req,res) => {
+router.get("/outfit/:outfitId/preview", isLoggedIn, (req,res) => {
 
   let {outfitId} = req.params;
 
@@ -77,33 +76,30 @@ router.get("/outfit/:outfitId/preview", (req,res) => {
 })
 
 // delete outfit
-router.post('/outfit/:outfitId/delete', (req, res) => {
+router.post('/outfit/:outfitId/delete', isLoggedIn, async (req, res) => {
   let {outfitId} = req.params;
 
   const user = req.session.currentUser;
 
   let collectionsObj = [];
   
-    async function removeOutfit(){
-    
-      try {
-        const userDb = await User.findById(user._id)
-        for (let i = 0; i < userDb.collections.length; i++){
-          if (userDb.collections[i].toString() !== outfitId) {
-            collectionsObj.push(userDb.collections[i])
-          }
-        }
-
-        userDb.collections=collectionsObj
-
-        await User.findByIdAndUpdate(user._id,userDb,{new:true})
-        
-      }
-      catch (err) {
-        console.error(err)
+  try {
+    const userDb = await User.findById(user._id)
+    for (let i = 0; i < userDb.collections.length; i++){
+      if (userDb.collections[i].toString() !== outfitId) {
+        collectionsObj.push(userDb.collections[i])
       }
     }
-  removeOutfit()
+
+    userDb.collections=collectionsObj
+
+    await User.findByIdAndUpdate(user._id,userDb,{new:true})
+    
+  }
+  catch (err) {
+    console.error(err)
+  }
+
   res.redirect('/profile');
 });
 
@@ -112,19 +108,47 @@ router.get('/outfit/search', (req,res) => {
   res.render("private/search")
 })
 
-router.post('/results', (req,res) => {
-  const {piece}=req.body;
-  async function findPiece(){
-    try{
-      let pieceDb = await Piece.find(piece);
-      console.log(pieceDb)
-      res.send({outfits: pieceDb})
-    }
-    catch(err){
-      console.error(err);
-    }
+router.post('/results', async (req,res) => {
+  let search = req.body.piece
+
+  try{
+    let pieceDb = await Piece.find({name: search});
+
+    let typeString = pieceDb[0].pieceType;
+
+    let outfitSearch = {};
+
+    outfitSearch[typeString]=pieceDb[0]._id
+
+    let outfitsDb = await Outfit.find(outfitSearch)
+
+    //res.send({outfits: outfitsDb})
+    res.render('private/results',{outfits: outfitsDb})
   }
-  findPiece();
+  catch(err){
+    console.error(err);
+  }
+})
+
+// edit
+router.get('outfit/:outfitId/edit',isLoggedIn, (req,res) => {
+  res.render('private/edit')
+})
+
+router.get('outfit/update', isLoggedIn, async (req,res) => {
+  let {outfitId, top, bottom, shoes} = req.body
+
+  let topPieceDb = await Piece.find({name: top});
+  let bottomPieceDb = await Piece.find({name: bottom});
+  let shoesPieceDb = await Piece.find({name: shoes});
+
+  let updateOutfit = {};
+  updateOutfit[outfitId]={}
+  updatedOutfit[outfitId].top = topPieceDb[0]._id;
+  updatedOutfit[outfitId].bottom = bottomPieceDb[0]._id;
+  updatedOutfit[outfitId].shoes = shoesPieceDb[0]._id;
+
+  await Outfit.findByIdAndUpdate(updateOutfit);
 })
 
 module.exports = router;
