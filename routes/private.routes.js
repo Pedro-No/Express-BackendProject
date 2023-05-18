@@ -108,6 +108,8 @@ router.get('/outfit/search', async (req,res) => {
     res.render("private/search", {response: piecesArray})
 })
 
+
+// results
 router.post('/results', async (req,res) => {
   const {search} = req.body
 
@@ -130,7 +132,8 @@ router.post('/results', async (req,res) => {
       let pieceDbtop = await Piece.findById(outfitsDb[i].top);
       let pieceDbbottom = await Piece.findById(outfitsDb[i].bottom);
       let pieceDbshoes = await Piece.findById(outfitsDb[i].shoes);
-      
+
+      outfit.id = outfitsDb[i]._id
       outfit.top = pieceDbtop
       outfit.bottom = pieceDbbottom
       outfit.shoes = pieceDbshoes
@@ -146,7 +149,8 @@ router.post('/results', async (req,res) => {
   }
 })
 
-// edit
+// edit 
+// FALTA METER AS IMGS A ATUALIZAR
 router.get('/outfit/:outfitId/edit',isLoggedIn, async (req,res) => {
   let {outfitId} = req.params
   try {
@@ -154,8 +158,8 @@ router.get('/outfit/:outfitId/edit',isLoggedIn, async (req,res) => {
     const pieceDbtop = await Piece.find({pieceType: "top"})
     const pieceDbbottom = await Piece.find({pieceType: "bottom"})
     const pieceDbshoes = await Piece.find({pieceType: "shoes"})
-    res.render('private/edit', {id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
-    //res.send({id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
+     //res.render('private/edit', {id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
+    res.send({id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
   } catch (error) {
     console.log(error)
   }
@@ -165,7 +169,6 @@ router.get('/outfit/:outfitId/edit',isLoggedIn, async (req,res) => {
 ERA FIXE GUARDAR O OUTFIT NUMA COOKIE para não fazer chamadas a mais para a DB
 */
 
-//ainda falta testar esta logica
 router.post('/outfit/:outfitId/edit', isLoggedIn, async (req,res) => {
   let {outfitId} = req.params
   let {top, bottom, shoes} = req.body
@@ -174,14 +177,17 @@ router.post('/outfit/:outfitId/edit', isLoggedIn, async (req,res) => {
     let topPieceDb = await Piece.find({name: top});
     let bottomPieceDb = await Piece.find({name: bottom});
     let shoesPieceDb = await Piece.find({name: shoes});
+    
+    let outfitDb = await Outfit.findById(outfitId);
 
     let updateOutfit = {};
-    updateOutfit[outfitId]={}
-    updatedOutfit[outfitId].top = topPieceDb[0]._id;
-    updatedOutfit[outfitId].bottom = bottomPieceDb[0]._id;
-    updatedOutfit[outfitId].shoes = shoesPieceDb[0]._id;
+    updateOutfit.top = topPieceDb[0]._id;
+    updateOutfit.bottom = bottomPieceDb[0]._id;
+    updateOutfit.shoes = shoesPieceDb[0]._id;
 
-    await Outfit.findByIdAndUpdate(updateOutfit);
+    await Outfit.findByIdAndUpdate(outfitDb._id, updateOutfit,{new:true});
+
+    res.redirect('/profile')
   }catch(err){
     console.log(err)
   }
@@ -217,6 +223,35 @@ router.post('/outfit/create', async (req,res) => {
     res.redirect('/profile')
   }catch(err){
     console.log(err)
+  }
+})
+
+// Add Collection
+router.post('/outfit/:outfitId/add', async (req,res) => {
+  let {outfitId} = req.params;
+
+  const user = req.session.currentUser;
+
+  let collectionsObj = [];
+  
+  try {
+    const outfitToAdd = await Outfit.findById(outfitId)
+
+    const userDb = await User.findById(user._id)
+    for (let i = 0; i < userDb.collections.length; i++){
+        collectionsObj.push(userDb.collections[i])
+    }
+
+    collectionsObj.push(outfitToAdd._id)
+    
+    userDb.collections=collectionsObj
+
+    await User.findByIdAndUpdate(user._id,userDb,{new:true})
+
+    res.redirect('/profile')
+  }
+  catch (err) {
+    console.error(err)
   }
 })
 

@@ -6,5 +6,7 @@
     <img class="outfit-image" src="{{bottom.imageUrl}}" alt="Result Img">
     <img class="outfit-image" src="{{shoes.imageUrl}}" alt="Result Img">
 </div>
-<a href="">add to collection</a>
+<form action="/outfit/{{id}}/add" method="post">
+    <button type="submit">add to collection</button>
+</form>
 {{/each}}
