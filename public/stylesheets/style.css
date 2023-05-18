@@ -35,7 +35,7 @@ h1 {
 }
 
 .lowerBar{
-  background-color: #ccd5ae;
+  background-color: #e9edc9;
   height: 30px;
   display: flex;
   justify-content: space-evenly;
@@ -64,6 +64,42 @@ h1 {
   font-family: 'Dancing Script', serif;
   font-size: 30px;
 }
+
+.banner{
+  display: flex;
+  justify-content: end;
+  padding: 115px;
+}
+
+.about{
+  background-color: #e9edc9;
+  color: black;
+  font-weight: 600;
+  height: 290px;
+  width: 500px;
+  text-align: center;
+  justify-content: center;
+  border-radius: 25px;
+}
+
+.greeting{
+  display: flex;
+  justify-content: center;
+  font-size: 30px;;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* temp */
 .outfit-section{
