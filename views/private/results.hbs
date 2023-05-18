@@ -1,4 +1,10 @@
-<h1>show results</h1>
-{{#each outfits}}
-<p>{{top}}</p>
+<h1>results</h1>
+{{#each results}}
+<div>
+    <h3>Outfit</h3>
+    <img class="outfit-image" src="{{top.imageUrl}}" alt="Result Img">
+    <img class="outfit-image" src="{{bottom.imageUrl}}" alt="Result Img">
+    <img class="outfit-image" src="{{shoes.imageUrl}}" alt="Result Img">
+</div>
+<a href="">add to collection</a>
 {{/each}}

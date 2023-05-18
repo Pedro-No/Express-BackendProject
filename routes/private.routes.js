@@ -115,15 +115,34 @@ router.post('/results', async (req,res) => {
   try{
     let pieceDb = await Piece.find({name: search});
 
-    let typeString = pieceDb[0].pieceType;
-
     let outfitSearch = {};
+    
+    let typeString = pieceDb[0].pieceType;
 
     outfitSearch[typeString]=pieceDb[0]._id
 
-    let outfitsDb = await Outfit.find(outfitSearch)
+    const outfitsDb = await Outfit.find(outfitSearch)
 
-    res.render('private/results',{outfits: outfitsDb})
+    let outfitsArr =  []
+
+    for(let i = 0; i < outfitsDb.length; i++){
+      let outfit = {}
+
+      let pieceDbtop = await Piece.findById(outfitsDb[i].top);
+      let pieceDbbottom = await Piece.findById(outfitsDb[i].bottom);
+      let pieceDbshoes = await Piece.findById(outfitsDb[i].shoes);
+      
+      console.log(pieceDbtop)
+
+      outfit.top = pieceDbtop
+      outfit.bottom = pieceDbbottom
+      outfit.shoes = pieceDbshoes
+
+      outfitsArr.push(outfit)
+    }
+
+    res.render('private/results',{outfits: outfitsDb, results: outfitsArr})
+    //res.send({outfits: outfitsDb, results: outfitsArr})
   }
   catch(err){
     console.error(err);
