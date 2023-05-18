@@ -1,14 +1,16 @@
 <h1>VogueVibes</h1>
 <p>Fashion made easy!</p>
 {{#if logged}}
-    <a href="profile">Profile</a>
+    <a href="/profile">Profile</a>
     <br>
-    <a href="logout">Logout</a>
+    <a href="/logout">logout</a>
     <br>
     <br>
     <a href="/outfit/search">search</a>
-{{else}}
-    <a href="/login">Log in</a>
     <br>
-    <a href="/signup">Sign up</a>
+    <a href="/outfit/create">create an outfit</a>
+{{else}}
+    <a href="/login">log in</a>
+    <br>
+    <a href="/signup">sign up</a>
 {{/if}}

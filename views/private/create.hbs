@@ -1,19 +1,22 @@
-<h3>edit outfit</h3>
-<form action="/outfit/{{id}}/edit" method="post">
-  <select name="top">
+<h1>create</h1>
+<form action="/outfit/create" method="post">
+  <label>Top:</label>
+  <select name="top"> 
     {{#each pieces.top}}
       <option name="top" value='{{name}}'>{{name}}</option>
     {{/each}}
   </select>
+  <label>Bottom:</label>
    <select name="bottom">
     {{#each pieces.bottom}}
       <option name="top" value='{{name}}'>{{name}}</option>
     {{/each}}
   </select>
+  <label>Shoes:</label>
    <select name="shoes">
     {{#each pieces.shoes}}
       <option name="top" value='{{name}}'>{{name}}</option>
     {{/each}}
   </select>
-  <button type="submit">update</button>
+  <button type="submit">Create</button>
 </form> 

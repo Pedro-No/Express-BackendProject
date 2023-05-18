@@ -131,26 +131,77 @@ router.post('/results', async (req,res) => {
 })
 
 // edit
-router.get('/outfit/:outfitId/edit',isLoggedIn, (req,res) => {
-  console.log("HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-  res.render('private/edit')
+router.get('/outfit/:outfitId/edit',isLoggedIn, async (req,res) => {
+  let {outfitId} = req.params
+  try {
+    const outfitDb = await Outfit.findById(outfitId)
+    const pieceDbtop = await Piece.find({pieceType: "top"})
+    const pieceDbbottom = await Piece.find({pieceType: "bottom"})
+    const pieceDbshoes = await Piece.find({pieceType: "shoes"})
+    res.render('private/edit', {id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
+    //res.send({id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
+  } catch (error) {
+    console.log(error)
+  }
 })
 
-router.get('/outfit/:outfitId/edit', isLoggedIn, async (req,res) => {
+/*
+ERA FIXE GUARDAR O OUTFIT NUMA COOKIE para não fazer chamadas a mais para a DB
+*/
+
+//ainda falta testar esta logica
+router.post('/outfit/:outfitId/edit', isLoggedIn, async (req,res) => {
   let {outfitId} = req.params
   let {top, bottom, shoes} = req.body
 
-  let topPieceDb = await Piece.find({name: top});
-  let bottomPieceDb = await Piece.find({name: bottom});
-  let shoesPieceDb = await Piece.find({name: shoes});
+  try {
+    let topPieceDb = await Piece.find({name: top});
+    let bottomPieceDb = await Piece.find({name: bottom});
+    let shoesPieceDb = await Piece.find({name: shoes});
 
-  let updateOutfit = {};
-  updateOutfit[outfitId]={}
-  updatedOutfit[outfitId].top = topPieceDb[0]._id;
-  updatedOutfit[outfitId].bottom = bottomPieceDb[0]._id;
-  updatedOutfit[outfitId].shoes = shoesPieceDb[0]._id;
+    let updateOutfit = {};
+    updateOutfit[outfitId]={}
+    updatedOutfit[outfitId].top = topPieceDb[0]._id;
+    updatedOutfit[outfitId].bottom = bottomPieceDb[0]._id;
+    updatedOutfit[outfitId].shoes = shoesPieceDb[0]._id;
 
-  await Outfit.findByIdAndUpdate(updateOutfit);
+    await Outfit.findByIdAndUpdate(updateOutfit);
+  }catch(err){
+    console.log(err)
+  }
+  
+})
+
+// create
+router.get('/outfit/create', async (req,res) => {
+  try {
+    const pieceDbtop = await Piece.find({pieceType: "top"})
+    const pieceDbbottom = await Piece.find({pieceType: "bottom"})
+    const pieceDbshoes = await Piece.find({pieceType: "shoes"})
+    res.render('private/create', {pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+router.post('/outfit/create', async (req,res) => {
+  let {top, bottom, shoes} = req.body
+
+  try {
+    let topPieceDb = await Piece.find({name: top});
+    let bottomPieceDb = await Piece.find({name: bottom});
+    let shoesPieceDb = await Piece.find({name: shoes});
+
+    let createOutfit = {};
+    createOutfit.top = topPieceDb[0]._id;
+    createOutfit.bottom = bottomPieceDb[0]._id;
+    createOutfit.shoes = shoesPieceDb[0]._id;
+
+    await Outfit.create(createOutfit)
+    res.redirect('/profile')
+  }catch(err){
+    console.log(err)
+  }
 })
 
 module.exports = router;

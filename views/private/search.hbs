@@ -2,7 +2,7 @@
 <form action="/results" method="post">
   <select name="search">
     {{#each response}}
-      <option name="search" value='{{name}}'>{{name}}</option>
+      <option name="top" value='{{name}}'>{{name}}</option>
     {{/each}}
   </select>
   <button type="submit">search</button>
