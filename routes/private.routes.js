@@ -38,17 +38,16 @@ router.get("/profile", isLoggedIn, (req, res) => {
 
       let collectionsObj = [];
       for(let i = 0; i < userDb.collections.length; i++){
-        Promise.all(
-            [
-              Piece.findById(userDb.collections[i].top),
-              Piece.findById(userDb.collections[i].bottom),
-              Piece.findById(userDb.collections[i].shoes),
-            ]
-          ).then((vals) => {
-            collectionsObj.push({id: userDb.collections[i]._id, top:vals[0], bottom:vals[1], shoes:vals[2]});
-          })
-        } 
-        res.render("private/profile",{user: userDb, collection: collectionsObj});
+        try {
+          const topInfo = await Piece.findById(userDb.collections[i].top);
+          const botInfo = await Piece.findById(userDb.collections[i].bottom);
+          const shoesInfo = await Piece.findById(userDb.collections[i].shoes);
+          collectionsObj.push({id: userDb.collections[i]._id, top: topInfo, bottom: botInfo, shoes: shoesInfo});          
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      res.render("private/profile",{user: userDb, collection: collectionsObj});
     }else {
       res.render("private/profile",{user: userDb, collection:[]})
     }
@@ -132,8 +131,6 @@ router.post('/results', async (req,res) => {
       let pieceDbbottom = await Piece.findById(outfitsDb[i].bottom);
       let pieceDbshoes = await Piece.findById(outfitsDb[i].shoes);
       
-      console.log(pieceDbtop)
-
       outfit.top = pieceDbtop
       outfit.bottom = pieceDbbottom
       outfit.shoes = pieceDbshoes
