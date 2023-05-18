@@ -158,8 +158,7 @@ router.get('/outfit/:outfitId/edit',isLoggedIn, async (req,res) => {
     const pieceDbtop = await Piece.find({pieceType: "top"})
     const pieceDbbottom = await Piece.find({pieceType: "bottom"})
     const pieceDbshoes = await Piece.find({pieceType: "shoes"})
-     //res.render('private/edit', {id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
-    res.send({id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
+    res.render('private/edit', {id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
   } catch (error) {
     console.log(error)
   }
