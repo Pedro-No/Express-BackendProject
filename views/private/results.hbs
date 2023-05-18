@@ -1,3 +1,8 @@
+<div  class="lowerBar">
+<a class="link" href="/profile">Profile</a>
+<a class="link" href="/logout">logout</a>
+</div>
+
 <h1>results</h1>
 {{#each results}}
 <div>
@@ -6,7 +11,5 @@
     <img class="outfit-image" src="{{bottom.imageUrl}}" alt="Result Img">
     <img class="outfit-image" src="{{shoes.imageUrl}}" alt="Result Img">
 </div>
-<form action="/outfit/{{id}}/add" method="post">
-    <button type="submit">add to collection</button>
-</form>
+<a href="">add to collection</a>
 {{/each}}

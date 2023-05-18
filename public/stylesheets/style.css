@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Dosis:wght@200;300&family=Playfair+Display:wght@700&display=swap');
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 10px;
+  padding: 0px;
+  background-image: url("/images/image1.jpeg");
+  background-size:cover;
 }
 
 a {
@@ -11,6 +15,57 @@ h1 {
   color: 15px;
 }
 
+/* nav bar */
+
+.nav-bar{
+  background-color: black;
+  height: 110px;
+  display: flex;
+  justify-content: center;
+
+}
+
+.vogue{
+  font-family: 'Playfair Display', serif;
+  text-decoration: none;
+  color: whitesmoke;
+  font-size: 30px;
+  letter-spacing: 1px;
+  
+}
+
+.lowerBar{
+  background-color: #ccd5ae;
+  height: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.link{
+  height: 20px;
+  width: 100px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.link:hover{
+  color: #faedcd;
+}
+
+/* Home tilte*/
+.First-title{
+  font-family: 'Dancing Script', serif;
+  font-size: 30px;
+}
+
+/* temp */
 .outfit-section{
   display: flex;
 }
@@ -24,3 +79,4 @@ h1 {
 .outfit-image{
   height: 100px;
 }
+

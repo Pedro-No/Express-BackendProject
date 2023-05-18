@@ -1,16 +1,24 @@
-<h1>VogueVibes</h1>
-<p>Fashion made easy!</p>
+
+
 {{#if logged}}
-    <a href="/profile">Profile</a>
-    <br>
-    <a href="/logout">logout</a>
-    <br>
-    <br>
-    <a href="/outfit/search">search</a>
-    <br>
-    <a href="/outfit/create">create an outfit</a>
+<div  class="lowerBar">
+    <a class="link" href="/profile">Profile</a>
+  
+    <a class="link" href="/outfit/search">search</a>
+    
+    <a class="link" href="/outfit/create">create</a>
+
+    <a class="link" href="/logout">logout</a>
+</div>
 {{else}}
-    <a href="/login">log in</a>
-    <br>
-    <a href="/signup">sign up</a>
+<div  class="lowerBar">
+    <a class="link" href="/login">log in</a>
+    
+    <a class="link" href="/signup">sign up</a>
+</div>
 {{/if}}
+
+<br>
+
+<p class="First-title">Fashion made easy!</p>
+

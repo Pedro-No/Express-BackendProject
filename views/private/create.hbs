@@ -1,3 +1,11 @@
+<div  class="lowerBar">
+<a class="link" href="/profile">Profile</a>
+
+<a class="link" href="/logout">logout</a>
+
+<a class="link" href="/outfit/search">search</a>
+</div>
+
 <h1>create</h1>
 <form action="/outfit/create" method="post">
   <label>Top:</label>
@@ -18,5 +26,5 @@
       <option name="top" value='{{name}}'>{{name}}</option>
     {{/each}}
   </select>
-  <button type="submit">Create</button>
+  <button class="buttons" type="submit">Create</button>
 </form> 
