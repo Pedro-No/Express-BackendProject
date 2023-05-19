@@ -1,20 +1,20 @@
-<div id="login-form">
-  <h2>Log In</h2>
-  <form action="/login" method="POST">
-  
-    <label> Email
-      <input type="email" name="email" placeholder="Your email" />
-    </label>
+<div id="body">
+  <div class="centerPage">
+    <div class="glassBackground login-box">
+      <div id="login-form">
+        <h2>VogueVibes</h2>
+        <form action="/login" method="POST">
+          <input  class="loginlabel"  type="email" name="email" placeholder="Email" />
+          <br>
+          <input  class="loginlabel" type="password" name="password" placeholder="Password" />
+          <br>
+          <button class="loginButton" type="submit">log In</button>
 
-    <label> Password
-      <input type="password" name="password" placeholder="Your password" />
-    </label>
-
-    <button type="submit">Log In</button>
-
-
-    {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
-    {{/if}}
-  </form>
+          {{#if errorMessage}}
+            <p class="login-error">{{errorMessage}}</p>
+          {{/if}}
+        </form>
+      </div>
+    </div>
+  </section>
 </div>

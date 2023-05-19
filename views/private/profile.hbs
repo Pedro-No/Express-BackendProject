@@ -1,34 +1,44 @@
+<section class="body">
+    <nav class="nav-bar">
+    <a class="vogue" href="/"><h1>VogueVibes</h1></a>
+    </nav>
+    <nav class="under-nav-bar">
+        <a class="link" href="/outfit/search">search</a>
+        <p>|</p>
+        <a class="link" href="/outfit/create">create</a>
+        <p>|</p>
+        <a class="link" href="/logout">logout</a>
+    </nav>
+    <section >
+        <div class="collection-page">
 
-
-<div  class="lowerBar">
-<a class="link" href="/outfit/search">search</a>
-<a class="link" href="/logout">logout</a>
-</div>
-
-<div class="greeting">
-<h1>Welcome {{user.username}}</h1>
-</div>
-
-<h2>Your collections:</h2>
-{{#each collection}}
-    <section class="outfit-section">
-        <div class="outfit-piece">
-            <p>{{top.name}}</p>
-            <img class="outfit-image" src="{{top.imageUrl}}" alt="Top image">
-        </div>
-        <div class="outfit-piece">
-            <p>{{bottom.name}}</p>
-            <img class="outfit-image" src="{{bottom.imageUrl}}" alt="Bottom image">
-        </div>
-        <div class="outfit-piece">
-            <p>{{shoes.name}}</p>
-            <img class="outfit-image" src="{{shoes.imageUrl}}" alt="Shoes image">
+            <div class="profile-phrase">
+                <h2>{{user.username}}</h2><p>'s collections:</p>
+            </div>
+            <div class="collection-grid">
+                {{#each collection}}
+                    <section class="outfit-section glassBackground">
+                        <div class="outfit-sample">
+                            <div>
+                                <img class="outfit-image" src="{{top.imageUrl}}" alt="Top image">
+                            </div>
+                            <div>
+                                <img class="outfit-image" src="{{bottom.imageUrl}}" alt="Bottom image">
+                            </div>
+                            <div>
+                                <img class="outfit-image-shoes" src="{{shoes.imageUrl}}" alt="Shoes image">
+                            </div>
+                        </div>
+                        <div class="collection-buttons">
+                            <a class="collectionButton" href="/outfit/{{id}}/preview">Preview</a>
+                            <a class="collectionButton" href="/outfit/{{id}}/edit">Edit</a>
+                            <form action="/outfit/{{id}}/delete" method="post">
+                                <button class="extra collectionButton" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </section>
+                {{/each}}
+            </div>
         </div>
     </section>
-    <a href="/outfit/{{id}}/preview">Preview Outfit</a>
-    <a href="/outfit/{{id}}/edit">Edit Outfit</a>
-    <br>
-    <form action="/outfit/{{id}}/delete" method="post">
-        <button type="submit">Delete Outfit</button>
-    </form>
-{{/each}}
+</section>

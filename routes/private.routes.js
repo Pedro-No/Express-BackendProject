@@ -142,7 +142,6 @@ router.post('/results', async (req,res) => {
     }
 
     res.render('private/results',{outfits: outfitsDb, results: outfitsArr})
-    //res.send({outfits: outfitsDb, results: outfitsArr})
   }
   catch(err){
     console.error(err);
@@ -176,8 +175,11 @@ router.post('/outfit/:outfitId/edit', isLoggedIn, async (req,res) => {
     let topPieceDb = await Piece.find({name: top});
     let bottomPieceDb = await Piece.find({name: bottom});
     let shoesPieceDb = await Piece.find({name: shoes});
-    
     let outfitDb = await Outfit.findById(outfitId);
+
+    /*
+    Promise ALL
+    */
 
     let updateOutfit = {};
     updateOutfit.top = topPieceDb[0]._id;

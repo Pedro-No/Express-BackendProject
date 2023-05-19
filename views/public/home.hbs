@@ -1,34 +1,48 @@
-
-
-{{#if logged}}
-<div  class="lowerBar">
-    <a class="link" href="/profile">Profile</a>
-  
-    <a class="link" href="/outfit/search">search</a>
-    
-    <a class="link" href="/outfit/create">create</a>
-
-    <a class="link" href="/logout">logout</a>
-</div>
-{{else}}
-<div  class="lowerBar">
-    <a class="link" href="/login">log in</a>
-    
-    <a class="link" href="/signup">sign up</a>
-</div>
-{{/if}}
-
-<br>
-
-
-<section class="banner">
-    <div class="about">
-        <h2>About us</h2>
-    <p> Welcome to FashionVibes, your ultimate source of inspiration for all things fashion. 
-        We are a dedicated platform that curates and showcases the latest trends, styles, and outfits from around the world.</p>
-    <br>
-    <p> At FashionVibes, we believe that fashion is an art form that allows individuals to express their creativity and personality. 
-        Our goal is to provide a visual feast of stunning clothing ensembles, allowing you to discover new ideas, find inspiration, 
-        and stay up-to-date with the ever-evolving fashion landscape.</p>
-    </div>
+<section class="body">
+        <nav class="nav-bar">
+            <a class="vogue" href="/"><h1>VogueVibes</h1></a>
+        </nav>
+        <nav class="under-nav-bar">
+            {{#if logged}}
+                <a class="link" href="/profile">Profile</a>
+                <p>|</p>
+                <a class="link" href="/outfit/search">search</a>
+                <p>|</p>
+                <a class="link" href="/outfit/create">create</a>
+                <p>|</p>
+                <a class="link" href="/logout">logout</a>
+            {{else}}
+                <a class="link" href="/login">log in</a>
+                <p>|</p>
+                <a class="link" href="/signup">sign up</a>
+            {{/if}}
+        </nav>
+        </div>
+        <div class="header headerBackground">
+        </div>
+        <div class="header headerBackgroundcolor">
+            <img class="headerImage" src="/images/image3.jpg" alt="image 3">
+            <div class="header-text">
+                <h2>About us</h2>
+                <p> 
+                Welcome to VogueVibes, your ultimate 
+                source of inspiration for all things 
+                fashion. We are a dedicated platform 
+                that curates and showcases the latest 
+                trends, styles, and outfits from 
+                around the world.
+                </p>
+                <p>
+                At VogueVibes, we believe that fashion 
+                is an art form that allows individuals 
+                to express their creativity and personality. 
+                Our goal is to provide a visual feast 
+                of stunning clothing ensembles, allowing 
+                you to discover new ideas, find inspiration, 
+                and stay up-to-date with the ever-evolving 
+                fashion landscape.
+                </p>
+            </div> 
+        </div>
+    </section>
 </section>

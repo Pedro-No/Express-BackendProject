@@ -1,118 +1,268 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Dosis:wght@200;300&family=Playfair+Display:wght@700&display=swap');
 
 body {
-  margin: 10px;
+  margin: 0px;
   padding: 0px;
-  background-image: url("/images/image1.jpeg");
-  background-size:cover;
+  background-color: white;
+  font-family: Helvetica, sans-serif;
 }
 
 a {
-  color: #00b7ff;
+  text-decoration: none;
+}
+
+
+#body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-image: url("/images/image1.jpg");
+  background-size:cover;
+}
+
+.glassBackground {
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* LOGIN / SIGNUP Page */
+.centerPage {
+  margin-top: 10%;
+  height: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+#login-form > h2 {
+  margin-top: 60px;
+  margin-bottom: 30px;
+
+  color: rgb(255, 255, 255);
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+}
+
+.signup-box{
+  width: 20%;
+  height: 460px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.login-box {
+  width: 20%;
+  height: 400px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.loginlabel {
+  margin: 10px;
+  padding: 15px;
+  border-radius: 25px;
+  border: 0 solid rgba(0, 0, 0, 0);
+
+  background-color: rgba(255, 255, 255, 0.445);
+  text-align: center;
+}
+
+.loginButton {
+  opacity: 50%;
+  margin: 10px;
+  padding: 15px 70px 15px 70px;
+  border-radius: 25px;
+  border: 0 solid rgba(0, 0, 0, 0);
+}
+
+.loginButton:hover {
+  opacity: 100%;
+  background-color: #ebdbb7;
+  color: white;
+}
+
+.login-error {
+  margin-left: 60px;
+  margin-right: 60px;
+
+  font-size: 13px;
+}
+
+/* HOME Page */
+.body{
+  margin: 20px;
+}
+
+.nav-bar {
+  background-color: black;
+  background-image: url("/images/image1.jpg");
+  background-size:cover;
+
+  height: 100px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 h1 {
-  color: 15px;
-}
-
-/* nav bar */
-
-.nav-bar{
-  background-color: black;
-  height: 110px;
-  display: flex;
-  justify-content: center;
-
+  margin: 0;
 }
 
 .vogue{
   font-family: 'Playfair Display', serif;
   text-decoration: none;
   color: whitesmoke;
-  font-size: 30px;
+  font-size: 25px;
   letter-spacing: 1px;
-  
 }
 
-.lowerBar{
-  background-color: #e9edc9;
-  height: 30px;
+.under-nav-bar {
+  background-color: #ece9e1;
+  height: 35px;
+
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 
-.link{
-  height: 20px;
-  width: 100px;
-  color: black;
-  display: flex;
-  justify-content: center;
-  line-height: 20px;
-  font-weight: 600;
-  letter-spacing: .05em;
-  font-size: 25px;
+.under-nav-bar > a {
   text-decoration: none;
+  color: #999690;
+  
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
-.link:hover{
-  color: #faedcd;
+.under-nav-bar > a:hover {
+  color: black;
 }
 
-/* Home tilte*/
-.First-title{
-  font-family: 'Dancing Script', serif;
+.header {
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerBackground {
+  height: 82.5%;
+  background-image: url("/images/image2.jpg");
+  background-size:cover;
+}
+
+.headerBackgroundcolor {
+  background-color: #ece9e1;
+}
+
+.header-text {
+  height: 300px;
+  width: 60%;
+
+  color: #999690;
+
+  display: flex;
+  flex-wrap: wrap;
+  padding-right: 10%;
+}
+
+.header-text > h2 {
+  margin: 20px 20px 0px 31px;
+}
+
+.header-text > p {
+  margin: 5px 30px 5px 30px;
+}
+
+/* Profile page*/
+.profile-phrase{
+  display: flex;
+  align-items: baseline;
+  color: white;
+
   font-size: 30px;
 }
 
-.banner{
-  display: flex;
-  justify-content: end;
-  padding: 115px;
+.profile-phrase > h2 {
+  font-family: 'Playfair Display', serif;
 }
 
-.about{
-  background-color: #e9edc9;
-  color: black;
-  font-weight: 600;
-  height: 290px;
-  width: 500px;
-  text-align: center;
-  justify-content: center;
-  border-radius: 25px;
-}
-
-.greeting{
-  display: flex;
-  justify-content: center;
-  font-size: 30px;;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* temp */
-.outfit-section{
-  display: flex;
-}
-
-.outfit-piece{
+.collection-page{
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
+  background-image: url("/images/image0.jpg");
   align-items: center;
+  justify-content: start;
+}
+
+.collection-grid{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.outfit-section{
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 2%;
+}
+
+.outfit-sample{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
 }
 
 .outfit-image{
   height: 100px;
 }
 
+.outfit-image-shoes{
+  width: 200px;
+}
+
+.collection-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+}
+
+.collectionButton{
+  background-color: rgba(255, 255, 255, 0.2);
+
+  height: 35px;
+  width: 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 10px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 40px;
+
+  color: white;
+
+}
+
+/* SEARCH */
