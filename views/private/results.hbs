@@ -1,17 +1,27 @@
-<div  class="lowerBar">
-<a class="link" href="/profile">Profile</a>
-<a class="link" href="/logout">logout</a>
-</div>
+<section class="body">
+  <nav class="nav-bar">
+    <a class="vogue" href="/"><h1>VogueVibes</h1></a>
+    </nav>
+    <nav class="under-nav-bar">
+        <a class="link" href="/profile">Profile</a>
+        <p>|</p>
+        <a class="link" href="/outfit/search">search</a>
+        <p>|</p>
+        <a class="link" href="/outfit/create">create</a>
+        <p>|</p>
+        <a class="link" href="/logout">logout</a>
+    </nav>
 
-<h1>results</h1>
-{{#each results}}
-<div>
-    <h3>Outfit</h3>
-    <img class="outfit-image" src="{{top.imageUrl}}" alt="Result Img">
-    <img class="outfit-image" src="{{bottom.imageUrl}}" alt="Result Img">
-    <img class="outfit-image" src="{{shoes.imageUrl}}" alt="Result Img">
-</div>
-<form action="/outfit/{{id}}/add" method="post">
-    <button type="submit">add to collection</button>
-</form>
-{{/each}}
+    <h1>results</h1>
+    {{#each results}}
+    <div>
+        <h3>Outfit</h3>
+        <img class="outfit-image" src="{{top.imageUrl}}" alt="Result Img">
+        <img class="outfit-image" src="{{bottom.imageUrl}}" alt="Result Img">
+        <img class="outfit-image" src="{{shoes.imageUrl}}" alt="Result Img">
+    </div>
+    <form action="/outfit/{{id}}/add" method="post">
+        <button type="submit">add to collection</button>
+    </form>
+    {{/each}}
+</section>

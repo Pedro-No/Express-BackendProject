@@ -1,24 +1,38 @@
-<div  class="lowerBar">
-<a class="link" href="/profile">Profile</a>
-<a class="link" href="/logout">logout</a>
-</div>
+<section class="body">
+  <nav class="nav-bar">
+  <a class="vogue" href="/"><h1>VogueVibes</h1></a>
+  </nav>
+  <nav class="under-nav-bar">
+      <a class="link" href="/profile">Profile</a>
+      <p>|</p>
+      <a class="link" href="/outfit/search">search</a>
+      <p>|</p>
+      <a class="link" href="/outfit/create">create</a>
+      <p>|</p>
+      <a class="link" href="/logout">logout</a>
+  </nav>
+  <h3>edit outfit</h3>
 
-<h3>edit outfit</h3>
-<form action="/outfit/{{id}}/edit" method="post">
-  <select name="top">
-    {{#each pieces.top}}
-      <option name="top" value='{{name}}'>{{name}}</option>
-    {{/each}}
-  </select>
-   <select name="bottom">
-    {{#each pieces.bottom}}
-      <option name="top" value='{{name}}'>{{name}}</option>
-    {{/each}}
-  </select>
-   <select name="shoes">
-    {{#each pieces.shoes}}
-      <option name="top" value='{{name}}'>{{name}}</option>
-    {{/each}}
-  </select>
-  <button type="submit">update</button>
-</form> 
+    <img src="{{outfit.top.imageUrl}}" alt="Top image">
+    <img src="{{outfit.bottom.imageUrl}}" alt="Bottom image">
+    <img src="{{outfit.shoes.imageUrl}}" alt="Shoes image">
+
+  <form action="/outfit/{{id}}/edit" method="post">
+    <select name="top">
+      {{#each pieces.top}}
+        <option name="top" value='{{name}}'>{{name}}</option>
+      {{/each}}
+    </select>
+    <select name="bottom">
+      {{#each pieces.bottom}}
+        <option name="top" value='{{name}}'>{{name}}</option>
+      {{/each}}
+    </select>
+    <select name="shoes">
+      {{#each pieces.shoes}}
+        <option name="top" value='{{name}}'>{{name}}</option>
+      {{/each}}
+    </select>
+    <button type="submit">update</button>
+  </form>
+</section>

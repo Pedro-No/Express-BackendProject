@@ -1,30 +1,35 @@
-<div  class="lowerBar">
-<a class="link" href="/profile">Profile</a>
+<section class="body">
+    <nav class="nav-bar">
+    <a class="vogue" href="/"><h1>VogueVibes</h1></a>
+    </nav>
+    <nav class="under-nav-bar">
+        <a class="link" href="/profile">Profile</a>
+        <p>|</p>
+        <a class="link" href="/outfit/search">search</a>
+        <p>|</p>
+        <a class="link" href="/logout">logout</a>
+    </nav>
 
-<a class="link" href="/logout">logout</a>
-
-<a class="link" href="/outfit/search">search</a>
-</div>
-
-<h1>create</h1>
-<form action="/outfit/create" method="post">
-  <label>Top:</label>
-  <select name="top"> 
-    {{#each pieces.top}}
-      <option name="top" value='{{name}}'>{{name}}</option>
-    {{/each}}
-  </select>
-  <label>Bottom:</label>
-   <select name="bottom">
-    {{#each pieces.bottom}}
-      <option name="top" value='{{name}}'>{{name}}</option>
-    {{/each}}
-  </select>
-  <label>Shoes:</label>
-   <select name="shoes">
-    {{#each pieces.shoes}}
-      <option name="top" value='{{name}}'>{{name}}</option>
-    {{/each}}
-  </select>
-  <button class="buttons" type="submit">Create</button>
-</form> 
+    <h1>create</h1>
+    <form action="/outfit/create" method="post">
+      <label>Top:</label>
+      <select name="top"> 
+        {{#each pieces.top}}
+          <option name="top" value='{{name}}'>{{name}}</option>
+        {{/each}}
+      </select>
+      <label>Bottom:</label>
+      <select name="bottom">
+        {{#each pieces.bottom}}
+          <option name="top" value='{{name}}'>{{name}}</option>
+        {{/each}}
+      </select>
+      <label>Shoes:</label>
+      <select name="shoes">
+        {{#each pieces.shoes}}
+          <option name="top" value='{{name}}'>{{name}}</option>
+        {{/each}}
+      </select>
+      <button class="buttons" type="submit">Create</button>
+    </form> 
+</section>
