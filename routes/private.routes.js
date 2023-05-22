@@ -39,9 +39,11 @@ router.get("/profile", isLoggedIn, (req, res) => {
       let collectionsObj = [];
       for(let i = 0; i < userDb.collections.length; i++){
         try {
-          const topInfo = await Piece.findById(userDb.collections[i].top);
-          const botInfo = await Piece.findById(userDb.collections[i].bottom);
-          const shoesInfo = await Piece.findById(userDb.collections[i].shoes);
+          const [topInfo, botInfo ,shoesInfo] = await Promise.all([
+          Piece.findById(userDb.collections[i].top),
+          Piece.findById(userDb.collections[i].bottom),
+          Piece.findById(userDb.collections[i].shoes),
+          ])
           collectionsObj.push({id: userDb.collections[i]._id, top: topInfo, bottom: botInfo, shoes: shoesInfo});          
         } catch (error) {
           console.log(error)
@@ -129,10 +131,12 @@ router.post('/results', async (req,res) => {
     for(let i = 0; i < outfitsDb.length; i++){
       let outfit = {}
 
-      let pieceDbtop = await Piece.findById(outfitsDb[i].top);
-      let pieceDbbottom = await Piece.findById(outfitsDb[i].bottom);
-      let pieceDbshoes = await Piece.findById(outfitsDb[i].shoes);
-
+      const [pieceDbtop, pieceDbbottom ,pieceDbshoes] = await Promise.all([
+        Piece.findById(outfitsDb[i].top),
+        Piece.findById(outfitsDb[i].bottom),
+        Piece.findById(outfitsDb[i].shoes),
+      ])
+    
       outfit.id = outfitsDb[i]._id
       outfit.top = pieceDbtop
       outfit.bottom = pieceDbbottom
@@ -155,36 +159,32 @@ router.get('/outfit/:outfitId/edit',isLoggedIn, async (req,res) => {
   try {
     const outfitDb = await Outfit.findById(outfitId)
 
-    const pieceTopId = await Piece.findById(outfitDb.top)
-    const pieceBotId = await Piece.findById(outfitDb.bottom)
-    const pieceShoesId = await Piece.findById(outfitDb.shoes)
-
-    const pieceDbtop = await Piece.find({pieceType: "top"})
-    const pieceDbbottom = await Piece.find({pieceType: "bottom"})
-    const pieceDbshoes = await Piece.find({pieceType: "shoes"})
+    const [pieceTopId, pieceBotId, pieceShoesId, pieceDbtop, pieceDbbottom, pieceDbshoes] = await Promise.all([ 
+    Piece.findById(outfitDb.top),
+    Piece.findById(outfitDb.bottom),
+    Piece.findById(outfitDb.shoes),
+    Piece.find({pieceType: "top"}),
+    Piece.find({pieceType: "bottom"}),
+    Piece.find({pieceType: "shoes"}),
+  ])
     res.render('private/edit', {id: outfitId, outfitObj: outfitDb, pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}, outfit:{top:pieceTopId, bottom: pieceBotId, shoes: pieceShoesId}})
   } catch (error) {
     console.log(error)
   }
 })
 
-/*
-ERA FIXE GUARDAR O OUTFIT NUMA COOKIE para não fazer chamadas a mais para a DB
-*/
-
 router.post('/outfit/:outfitId/edit', isLoggedIn, async (req,res) => {
   let {outfitId} = req.params
   let {top, bottom, shoes} = req.body
 
   try {
-    let topPieceDb = await Piece.find({name: top});
-    let bottomPieceDb = await Piece.find({name: bottom});
-    let shoesPieceDb = await Piece.find({name: shoes});
-    let outfitDb = await Outfit.findById(outfitId);
 
-    /*
-    Promise ALL
-    */
+    const [topPieceDb, bottomPieceDb, shoesPieceDb, outfitDb] = await Promise.all([ 
+      Piece.find({name: top}),
+      Piece.find({name: bottom}),
+      Piece.find({name: shoes}),
+      Outfit.findById(outfitId),
+    ])
 
     let updateOutfit = {};
     updateOutfit.top = topPieceDb[0]._id;
@@ -203,9 +203,12 @@ router.post('/outfit/:outfitId/edit', isLoggedIn, async (req,res) => {
 // create
 router.get('/outfit/create', async (req,res) => {
   try {
-    const pieceDbtop = await Piece.find({pieceType: "top"})
-    const pieceDbbottom = await Piece.find({pieceType: "bottom"})
-    const pieceDbshoes = await Piece.find({pieceType: "shoes"})
+
+    const [pieceDbtop, pieceDbbottom, pieceDbshoes] = await Promise.all([ 
+      Piece.find({pieceType: "top"}),
+      Piece.find({pieceType: "bottom"}),
+      Piece.find({pieceType: "shoes"}),
+    ])
 
     res.render('private/create', {pieces:{top:pieceDbtop, bottom:pieceDbbottom, shoes:pieceDbshoes}})
   } catch (error) {
@@ -217,10 +220,12 @@ router.post('/outfit/create', async (req,res) => {
   let {top, bottom, shoes} = req.body
 
   try {
-    let topPieceDb = await Piece.find({name: top});
-    let bottomPieceDb = await Piece.find({name: bottom});
-    let shoesPieceDb = await Piece.find({name: shoes});
-
+    const [topPieceDb, bottomPieceDb, shoesPieceDb] = await Promise.all([ 
+      Piece.find({name: top}),
+      Piece.find({name: bottom}),
+      Piece.find({name: shoes}),
+    ])
+    
     let createOutfit = {};
     createOutfit.top = topPieceDb[0]._id;
     createOutfit.bottom = bottomPieceDb[0]._id;
